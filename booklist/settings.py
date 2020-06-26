@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
 
     # Project-specific
     'api',
+
 ]
 
 MIDDLEWARE = [
@@ -143,3 +145,14 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+#REST framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
