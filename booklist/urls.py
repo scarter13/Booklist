@@ -16,10 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
+from api import views as api_views
+from rest_framework import routers
+from rest_framework.authtoken import views as authtoken_views
+
+router = routers.DefaultRouter()
+#router.register('users', api_views.UserViewSet)
+#router.register('books', api_views.BookViewSet)
+#router.register('notes', api_views.NoteViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/token/', authtoken_views.obtain_auth_token),
+    path('api/auth/', include('djoser.urls')),
+    path('api/', include(router.urls)),
+
 ]
+
+
 
 if settings.DEBUG:
     import debug_toolbar
