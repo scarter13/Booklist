@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Book, Author, Note
+from .models import Book, Author, Note
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,11 +8,21 @@ class AuthorSerializer(serializers.ModelSerializer):
             'book',
             'last_name',
             'first_name',
+        ]
 
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields =[
+            'book',
+            'text',
+            'date',
+            'page',
         ]
 
 class BookSerializer(serializers.HyperlinkedModelSerializer):
     authors = AuthorSerializer(many=True, required=False)
+    notes = NoteSerializer(many=True, required=False)
     class Meta:
         model = Book
         fields =[
@@ -21,9 +31,5 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
             'title',
             'status',
             'authors',
+            'notes',
         ]
-"""
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, related_name='books')
-    title = models.CharField(max_length=255)
-    status = models.CharField(max_length=4, choices=STATUS_CHOICES, default=NOT_READ)
-"""
