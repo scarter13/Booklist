@@ -5,6 +5,7 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
         fields =[
+            'id',
             'book',
             'last_name',
             'first_name',
@@ -14,6 +15,7 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields =[
+            'id',
             'book',
             'text',
             'date',
@@ -26,6 +28,7 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
         fields =[
+            'id',
             'url',
             'user',
             'title',
