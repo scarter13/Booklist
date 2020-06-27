@@ -17,17 +17,17 @@ class User(AbstractUser):
     pass
 
 class Book(models.Model):
-    NOT_READ = 'NR'
-    READING = 'RG'
-    READ = 'RD'
+    NOT_READ = 'NTRD'
+    READING = 'RDNG'
+    READ = 'READ'
     STATUS_CHOICES =[
         (NOT_READ, 'Not Yet Read'),
         (READING, 'Currently Reading'),
-        (READ, 'Finished Reading')
+        (READ, 'Finished Reading'),
     ]
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, related_name='books')
     title = models.CharField(max_length=255)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=NOT_READ)
+    status = models.CharField(max_length=4, choices=STATUS_CHOICES, default=NOT_READ)
 
     
 class Note(models.Model):
@@ -39,3 +39,12 @@ class Note(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Author(models.Model):
+    book = models.ForeignKey(to=Book, on_delete=models.CASCADE, null=True, blank=True, related_name='books')
+    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.last_name}, {self.first_name}"
