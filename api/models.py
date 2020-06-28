@@ -32,19 +32,19 @@ class Book(models.Model):
     
 class Note(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, related_name='notes')
-    book = models.ForeignKey(to = Book, on_delete = models.CASCADE, related_name='notes')
+    book = models.ForeignKey(to=Book, on_delete = models.CASCADE, related_name='notes')
     text = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     page = models.IntegerField(blank=True, null=True)
 
-    def __str__(self):
-        return self.text
+    #def __str__(self):
+        #return self.text
 
 
 class Author(models.Model):
-    book = models.ForeignKey(to=Book, on_delete=models.CASCADE, null=True, blank=True, related_name='books')
+    book = models.ForeignKey(to=Book, on_delete=models.CASCADE, null=True, blank=True, related_name='authors')
     last_name = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
 
-    def __str__(self):
-        return f"{self.last_name}, {self.first_name}"
+    #def __str__(self):
+        #return f"{self.last_name}, {self.first_name}"
