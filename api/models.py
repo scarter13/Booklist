@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+#from django_filters import rest_framework as filters
+
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -37,6 +39,9 @@ class Note(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     page = models.IntegerField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['-date']
+
     #def __str__(self):
         #return self.text
 
@@ -48,3 +53,8 @@ class Author(models.Model):
 
     #def __str__(self):
         #return f"{self.last_name}, {self.first_name}"
+
+#class BookFilter(filters.FilterSet):
+    #class Meta:
+        #model = Book
+        #fields = ['status']

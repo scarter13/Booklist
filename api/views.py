@@ -2,12 +2,20 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .models import Book, Author, Note
 from .serializers import BookSerializer,  AuthorSerializer, NoteSerializer
+from django_filters import rest_framework as filters
 
+
+class BookFilter(filters.FilterSet):
+    class Meta:
+        model = Book
+        fields = ['status']
 
 class BookViewSet(viewsets.ModelViewSet):
     #queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = BookFilter
+
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -28,3 +36,4 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [permissions.IsAuthenticated]
+
